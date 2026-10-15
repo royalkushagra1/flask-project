@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CricketHub Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7f6;
+            margin: 0;
+            padding: 30px;
+        }
+  
+        .navbar {
+    background: #073b4c;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+        .header {
+            background: #0f4c5c;
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .header-top{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+
+        .logout-btn{
+            background: white;
+            color: #0f4c5c;
+            padding: 10px 18px;
+            border-radius:7px;
+            text-decoration:none;
+            font-weight:bold;
+        }
+
+        .logout-btn:hover{
+            background: #e8f1f3;
+        }
+
+        .score-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        .score {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #0f4c5c;
+            color: white;
+        }
+
+        .out {
+            color: #777;
+        }
+
+        .error {
+            background: #ffe5e5;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .match-search {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    margin-bottom: 25px;
+}
+
+.match-search h2 {
+    margin-top: 0;
+}
+
+.match-search input {
+    width: 70%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.match-search button {
+    padding: 12px 20px;
+    background: #0f4c5c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.match-search button:hover {
+    opacity: 0.9;
+}
+.match-info {
+    background: white;
+    color: #222;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    margin-bottom: 25px;
+}
+
+.match-info h2 {
+    margin-top: 0;
+    color: #0f4c5c;
+}
+
+.match-result {
+    color: #222;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.match-live {
+    color: #222;
+    font-size: 20px;
+    font-weight: bold;
+}
+.match-info-card {
+    background: white;
+    padding: 25px;
+    margin: 25px 0;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.match-info-card h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #0f4c5c;
+}
+
+.match-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.info-box {
+    background: #f7f9fa;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.info-box span {
+    display: block;
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.info-box strong {
+    display: block;
+    color: #222;
+    font-size: 16px;
+}
+    </style>
+</head>
+
+<body>
+    
+    <body>
+
+    <nav class="navbar">
+        <div class="logo">🏏 CricketHub</div>
+
+        <div class="nav-links">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/dashboard">🔄 Refresh</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav> 
+
+    <div class="header">
+        <div class = "header-top">
+            <div>
+        <h1>🏏 CricketHub</h1>
+        <p>Live Cricket Scorecard</p>
+    </div>
+    <div class="match-search">
+    <h2>Search Match</h2>
+
+    <form method="POST" action="{{ url_for('dashboard') }}">
+        <input
+            type="number"
+            name="match_id"
+            placeholder="Enter Match ID"
+            required
+        >
+
+        <button type="submit">View Score</button>
+    </form>
+</div>
+
+{% if scorecard %}
+
+<div class="match-info">
+
+    <h2>🏏 Match Information</h2>
+
+    <div class="info-grid">
+
+        <div class="info-box">
+            <span>Match ID</span>
+            <strong>{{ match_id }}</strong>
+        </div>
+
+        <div class="info-box">
+            <span>Match</span>
+            <strong>{{ match_title }}</strong>
+        </div>
+
+        <div class="info-box">
+            <span>Status</span>
+            <strong>{{ match_status }}</strong>
+        </div>
+
+        <div class="info-box">
+            <span>Last Updated</span>
+            <strong>{{ last_updated }}</strong>
+        </div>
+
+    </div>
+
+</div>
+
+{% endif %}
+    <a href="{{ url_for('logout') }}" class="logout-btn">
+            Logout
+        </a>
+    </div>
+</div>
+
+    {% if scorecard %}
+
+        {% set innings = scorecard.get("scorecard", []) %}
+
+        {% if innings %}
+
+            {% for inning in innings %}
+
+                <div class="score-card">
+
+                    <h2>Innings {{ loop.index }}</h2>
+
+                    <div class="score">
+                        {{ inning.get("score", 0) }}/{{ inning.get("wickets", 0) }}
+                    </div>
+
+                    <p>
+                        Overs:
+                        {{ inning.get("overs", "-") }}
+                    </p>
+
+                    <h3>Batsmen</h3>
+
+                    <table>
+                        <tr>
+                            <th>Batsman</th>
+                            <th>Runs</th>
+                            <th>Balls</th>
+                            <th>4s</th>
+                            <th>6s</th>
+                            <th>Status</th>
+                        </tr>
+
+                        {% for batsman in inning.get("batsman", []) %}
+
+                        <tr>
+                            <td>
+                                <strong>{{ batsman.get("name", "Unknown") }}</strong>
+                            </td>
+
+                            <td>
+                                {{ batsman.get("runs", 0) }}
+                            </td>
+
+                            <td>
+                                {{ batsman.get("balls", 0) }}
+                            </td>
+
+                            <td>
+                                {{ batsman.get("fours", 0) }}
+                            </td>
+
+                            <td>
+                                {{ batsman.get("sixes", 0) }}
+                            </td>
+
+                            <td class="out">
+                                {{ batsman.get("outdec", "") }}
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </table>
+                    <!-- Bowling Scorecard -->
+{% if inning.get("bowler") %}
+
+<div class="bowling-section">
+
+    <h3>🎯 Bowlers</h3>
+
+    <table class="score-table">
+
+        <thead>
+            <tr>
+                <th>Bowler</th>
+                <th>Overs</th>
+                <th>Runs</th>
+                <th>Wickets</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for bowler in inning.get("bowler", []) %}
+
+            <tr>
+                <td>
+                    {{ bowler.get("bowlname", bowler.get("name", "Unknown")) }}
+                </td>
+
+                <td>
+                    {{ bowler.get("overs", 0) }}
+                </td>
+
+                <td>
+                    {{ bowler.get("runs", bowler.get("runsconceded", 0)) }}
+                </td>
+
+                <td>
+                    {{ bowler.get("wickets", 0) }}
+                </td>
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endif %}
+<!-- Extras -->
+{% if inning.get("extras") %}
+
+<div class="extras-section">
+
+    <h3>➕ Extras</h3>
+
+    <table class="score-table">
+
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Runs</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for key, value in inning.get("extras", {}).items() %}
+
+            <tr>
+                <td>{{ key }}</td>
+                <td>{{ value }}</td>
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endif %}
+<!-- Fall of Wickets -->
+{% if inning.get("fow") %}
+
+<div class="fow-section">
+
+    <h3>🏏 Fall of Wickets</h3>
+
+    <table class="score-table">
+
+        <thead>
+            <tr>
+                <th>Wicket</th>
+                <th>Batsman</th>
+                <th>Score</th>
+                <th>Over</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for wicket in inning.get("fow", {}).get("fow", []) %}
+
+            <tr>
+
+                <td>
+                    {{ loop.index }}
+                </td>
+
+                <td>
+                    {{ wicket.get("batsmanname", "Unknown") }}
+                </td>
+
+                <td>
+                    {{ wicket.get("runs", 0) }}
+                </td>
+
+                <td>
+                    {{ wicket.get("overnbr", 0) }}
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endif %}
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="error">
+                No innings data available.
+            </div>
+
+        {% endif %}
+
+    {% else %}
+
+        <div class="error">
+            Unable to fetch cricket data.
+        </div>
+
+    {% endif %}
+    
+
+</body>
+</html>

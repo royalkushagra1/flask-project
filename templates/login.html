@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login - CricketHub</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #071a2b, #0b3d2e);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Decorative cricket balls */
+        .ball {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: #b91c1c;
+            opacity: 0.18;
+        }
+
+        .ball.one {
+            top: 8%;
+            left: 8%;
+        }
+
+        .ball.two {
+            bottom: 8%;
+            right: 8%;
+            width: 180px;
+            height: 180px;
+        }
+
+        .login-container {
+            width: 900px;
+            max-width: 92%;
+            min-height: 520px;
+            display: flex;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 25px;
+            overflow: hidden;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Left section */
+        .welcome-section {
+            width: 50%;
+            padding: 55px 45px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        .logo {
+            font-size: 65px;
+            margin-bottom: 15px;
+        }
+
+        .welcome-section h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .welcome-section h1 span {
+            color: #22c55e;
+        }
+
+        .welcome-section p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .features {
+            margin-top: 30px;
+            color: #e2e8f0;
+            line-height: 2;
+        }
+
+        /* Login section */
+        .login-section {
+            width: 50%;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px 45px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-section h2 {
+            color: #071a2b;
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            color: #334155;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 20px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            outline: none;
+            font-size: 15px;
+        }
+
+        input:focus {
+            border-color: #16a34a;
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #16a34a;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .login-btn:hover {
+            background: #15803d;
+            transform: translateY(-1px);
+        }
+
+        .signup-text {
+            text-align: center;
+            margin-top: 22px;
+            color: #64748b;
+        }
+
+        .signup-text a {
+            color: #15803d;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        @media (max-width: 700px) {
+            .login-container {
+                flex-direction: column;
+            }
+
+            .welcome-section,
+            .login-section {
+                width: 100%;
+            }
+
+            .welcome-section {
+                padding: 35px;
+            }
+
+            .login-section {
+                padding: 35px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="ball one"></div>
+    <div class="ball two"></div>
+
+    <div class="login-container">
+
+        <!-- Welcome side -->
+        <div class="welcome-section">
+
+            <div class="logo">🏏</div>
+
+            <h1>Cricket<span>Hub</span></h1>
+
+            <p>
+                Your place for live cricket scores,
+                match information and player statistics.
+            </p>
+
+            <div class="features">
+                ✓ Live Match Scores<br>
+                ✓ Player Statistics<br>
+                ✓ Match Details
+            </div>
+
+        </div>
+
+
+        <!-- Login side -->
+        <div class="login-section">
+
+            <h2>Welcome Back!</h2>
+
+            <p class="subtitle">
+                Login to continue to CricketHub
+            </p>
+
+            <form method="POST">
+
+                <label for="username">Username</label>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Enter your username"
+                    required
+                >
+
+                <label for="password">Password</label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+                <button type="submit" class="login-btn">
+                    Login
+                </button>
+
+            </form>
+
+            <p class="signup-text">
+                Don't have an account?
+                <a href="/signup">Create Account</a>
+            </p>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
